@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>周日奥森 · 看向日葵</title>
+<style>
+  :root {
+    --sun: #F5A623;
+    --sun-light: #FDEBD0;
+    --green: #6B8E23;
+    --dark: #3D2B1F;
+    --cream: #FFF8EE;
+    --text: #4A3728;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Noto Sans SC", sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    background: linear-gradient(135deg, #FFD54F 0%, #FF8F00 100%);
+    padding: 48px 20px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: 20px; right: -20px;
+    font-size: 80px; opacity: 0.12;
+  }
+  .hero .emoji-row {
+    font-size: 56px; margin-bottom: 10px;
+    animation: sway 3s ease-in-out infinite;
+  }
+  @keyframes sway {
+    0%,100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+  }
+  .hero h1 {
+    font-size: 28px; font-weight: 800; color: #fff;
+    text-shadow: 0 2px 8px rgba(0,0,0,.12);
+    margin-bottom: 6px;
+  }
+  .hero .sub {
+    font-size: 15px; color: rgba(255,255,255,.85);
+    font-weight: 500;
+  }
+
+  /* ── Card ── */
+  .card {
+    background: #fff; border-radius: 16px;
+    margin: 16px 16px; padding: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+  }
+  .card h2 {
+    font-size: 18px; font-weight: 700;
+    margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+  }
+
+  /* ── Meeting Info ── */
+  .meet-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  }
+  .meet-item {
+    background: var(--sun-light); border-radius: 12px;
+    padding: 14px; text-align: center;
+  }
+  .meet-item .icon { font-size: 26px; margin-bottom: 4px; }
+  .meet-item .label { font-size: 11px; color: #999; margin-bottom: 2px; }
+  .meet-item .value { font-size: 15px; font-weight: 700; color: var(--dark); }
+
+  /* ── Tips ── */
+  .tip-list { list-style: none; }
+  .tip-list li {
+    padding: 10px 0; border-bottom: 1px solid #f0ece4;
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14px;
+  }
+  .tip-list li:last-child { border-bottom: none; }
+  .tip-list .tip-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .highlight { background: #FFF3CD; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+
+  /* ── Restaurant ── */
+  .resto-card {
+    display: flex; gap: 12px; padding: 14px 0;
+    border-bottom: 1px solid #f0ece4; align-items: center;
+  }
+  .resto-card:last-child { border-bottom: none; }
+  .resto-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--sun-light); color: var(--sun);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 16px; flex-shrink: 0;
+  }
+  .resto-info { flex: 1; }
+  .resto-name { font-size: 15px; font-weight: 700; }
+  .resto-meta { font-size: 12px; color: #999; margin-top: 2px; }
+  .resto-tags { margin-top: 4px; }
+  .tag {
+    display: inline-block; font-size: 11px; padding: 2px 8px;
+    border-radius: 10px; margin-right: 4px; margin-bottom: 4px;
+    background: #f5f0e6; color: #8B7355;
+  }
+  .tag.good { background: #E8F5E9; color: #388E3C; }
+
+  /* ── Timeline ── */
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before {
+    content: ''; position: absolute; left: 10px; top: 4px; bottom: 4px;
+    width: 2px; background: #FFD54F;
+  }
+  .tl-item { position: relative; margin-bottom: 18px; }
+  .tl-item:last-child { margin-bottom: 0; }
+  .tl-dot {
+    position: absolute; left: -22px; top: 2px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--sun); border: 3px solid #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,.15);
+  }
+  .tl-time { font-size: 12px; color: var(--sun); font-weight: 700; }
+  .tl-text { font-size: 14px; }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center; padding: 32px 16px;
+    font-size: 13px; color: #B8A898;
+  }
+  .footer .big-emoji { font-size: 40px; display: block; margin-bottom: 8px; }
+
+  /* ── Button ── */
+  .btn {
+    display: block; width: calc(100% - 32px); margin: 8px 16px;
+    padding: 14px; border-radius: 12px; text-align: center;
+    font-size: 16px; font-weight: 700; text-decoration: none;
+    border: none; cursor: pointer;
+  }
+  .btn-primary {
+    background: var(--sun); color: #fff;
+    box-shadow: 0 4px 16px rgba(245,166,35,.35);
+  }
+  .btn-outline {
+    background: #fff; color: var(--sun);
+    border: 2px solid var(--sun);
+  }
+
+  .map-link {
+    display: block; text-align: center; padding: 8px;
+    font-size: 13px; color: var(--green); text-decoration: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════ Hero ═══════ -->
+<div class="hero">
+  <div class="emoji-row">🌻</div>
+  <h1>周日去看向日葵吧</h1>
+  <div class="sub">奥林匹克森林公园 · 北园</div>
+</div>
+
+<!-- ═══════ Meeting Info ═══════ -->
+<div class="card">
+  <h2>📍 时间地点</h2>
+  <div class="meet-grid">
+    <div class="meet-item">
+      <div class="icon">📅</div>
+      <div class="label">日期</div>
+      <div class="value">7月6日 周日</div>
+    </div>
+    <div class="meet-item">
+      <div class="icon">⏰</div>
+      <div class="label">碰面时间</div>
+      <div class="value">下午 5:30</div>
+    </div>
+    <div class="meet-item" style="grid-column: 1 / -1;">
+      <div class="icon">🚪</div>
+      <div class="label">碰面地点</div>
+      <div class="value">奥森北园 · 西门</div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:10px;">
+    <span style="font-size:13px;color:#999;">西门进去右转走几分钟就到花海 🌻</span>
+  </div>
+</div>
+
+<!-- ═══════ Plan ═══════ -->
+<div class="card">
+  <h2>🗺️ 行程安排</h2>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-time">17:30</div>
+      <div class="tl-text">北园西门碰头，入园</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-time">17:30 – 19:00</div>
+      <div class="tl-text">「花田野趣」向日葵花海 🌻 傍晚光线最好，随便拍</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-time">19:00 – 19:30</div>
+      <div class="tl-text">溜达逛逛荷花池、湿地 🌿</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-time">19:30+</div>
+      <div class="tl-text">附近吃饭 🍽️ 看心情选</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ Guide ═══════ -->
+<div class="card">
+  <h2>📷 向日葵攻略</h2>
+  <ul class="tip-list">
+    <li>
+      <span class="tip-icon">🌻</span>
+      <span><span class="highlight">20多个品种</span>：泰迪熊、巧克力、梵高、朋克摇滚… 不只有黄色</span>
+    </li>
+    <li>
+      <span class="tip-icon">🪵</span>
+      <span>升级版<span class="highlight">秋千主题花园</span>：风吟云廊、环形秋千、花船秋千，拍照出片</span>
+    </li>
+    <li>
+      <span class="tip-icon">📸</span>
+      <span>傍晚5-7点<span class="highlight">逆光拍摄</span>，发丝会发光！穿白色系最上镜</span>
+    </li>
+    <li>
+      <span class="tip-icon">👟</span>
+      <span>穿<span class="highlight">平底鞋</span>，园区大，有石子路。带水，注意防晒</span>
+    </li>
+    <li>
+      <span class="tip-icon">🦟</span>
+      <span>花丛蚊子多，记得喷<span class="highlight">驱蚊液</span></span>
+    </li>
+    <li>
+      <span class="tip-icon">🎫</span>
+      <span><span class="highlight">免费入园</span>，6:00-22:00 开放，不用预约</span>
+    </li>
+    <li>
+      <span class="tip-icon">🎪</span>
+      <span>周末有「花间有集」<span class="highlight">林下市集</span>，还有哈根达斯、奈雪、LAVAZZA咖啡</span>
+    </li>
+  </ul>
+</div>
+
+<!-- ═══════ Restaurants ═══════ -->
+<div class="card">
+  <h2>🍽️ 附近漂亮饭</h2>
+  <p style="font-size:13px;color:#999;margin-bottom:12px;">都在奥森步行/短途可达，排名不分先后</p>
+
+  <div class="resto-card">
+    <div class="resto-num">1</div>
+    <div class="resto-info">
+      <div class="resto-name">京味斋 · 北京牡丹烤鸭（奥体店）</div>
+      <div class="resto-meta">⭐⭐⭐⭐  |  ¥120/人  |  大屯路附近</div>
+      <div class="resto-tags">
+        <span class="tag good">烤鸭</span><span class="tag">京菜</span><span class="tag">环境好</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="resto-card">
+    <div class="resto-num">2</div>
+    <div class="resto-info">
+      <div class="resto-name">新奥购物中心</div>
+      <div class="resto-meta">⭐⭐⭐⭐  |  多样选择  |  奥森南门步行可达</div>
+      <div class="resto-tags">
+        <span class="tag">商场</span><span class="tag good">选择多</span><span class="tag">冷气足</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="resto-card">
+    <div class="resto-num">3</div>
+    <div class="resto-info">
+      <div class="resto-name">花田驿站 / 花趣工坊（园内）</div>
+      <div class="resto-meta">全新开放  |  就在花海旁边</div>
+      <div class="resto-tags">
+        <span class="tag good">方便</span><span class="tag">轻食</span><span class="tag">咖啡</span>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:12px;color:#999;margin-top:10px;">
+    ⚠️ 高德API key 有问题，餐厅信息来自网络搜索结果，建议到那天再看看大众点评
+  </p>
+</div>
+
+<!-- ═══════ Transport ═══════ -->
+<div class="card">
+  <h2>🚇 怎么去</h2>
+  <ul class="tip-list">
+    <li>
+      <span class="tip-icon">🚇</span>
+      <span><span class="highlight">8号线 林萃桥站 C1口</span> → 步行约10分钟 → 北园西门</span>
+    </li>
+    <li>
+      <span class="tip-icon">⚠️</span>
+      <span>别坐到森林公园南门站（那是南园，离花海远）</span>
+    </li>
+    <li>
+      <span class="tip-icon">🚗</span>
+      <span>自驾导航「奥森北园西门停车场」，¥6/小时，周末建议早点去</span>
+    </li>
+  </ul>
+</div>
+
+<!-- ═══════ Map ═══════ -->
+<a class="btn btn-outline" href="https://uri.amap.com/marker?position=116.3947,40.0185&name=奥森北园西门" target="_blank">
+  🗺️ 在地图上打开
+</a>
+
+<!-- ═══════ Footer ═══════ -->
+<div class="footer">
+  <span class="big-emoji">🌻</span>
+  周日见！<br>记得穿白衣服，带驱蚊水～
+</div>
+
+</body>
+</html>
